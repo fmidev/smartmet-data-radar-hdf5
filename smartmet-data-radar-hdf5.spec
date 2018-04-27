@@ -40,8 +40,8 @@ EOF
 cat > %{buildroot}%{smartmetroot}/cnf/cron/cron.hourly/clean_data_radar <<EOF
 #!/bin/sh
 # Clean RADAR HDF5 data
-cleaner -maxage 24 '_radar_' /smartmet/editor/radar
-find /smartmet/data/incoming/radar -type f -mmin +10080 -delete
+cleaner -maxage 12 '_radar_' /smartmet/editor/radar
+find /smartmet/data/incoming/radar -type f -mmin +180 -delete
 EOF
 
 install -m 755 %_topdir/SOURCES/smartmet-data-radar-hdf5/doradar.sh %{buildroot}%{smartmetroot}/run/data/radar/bin/
