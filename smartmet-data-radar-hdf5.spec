@@ -1,7 +1,7 @@
 %define smartmetroot /smartmet
 
 Name:           smartmet-data-radar-hdf5
-Version:        18.4.27
+Version:        18.5.3
 Release:        1%{?dist}.fmi
 Summary:        SmartMet Data Radar HDF5 Odim
 Group:          System Environment/Base
@@ -40,7 +40,8 @@ EOF
 cat > %{buildroot}%{smartmetroot}/cnf/cron/cron.hourly/clean_data_radar <<EOF
 #!/bin/sh
 # Clean RADAR HDF5 data
-cleaner -maxage 12 '_radar_' /smartmet/editor/radar
+cleaner -maxage 24 '_radar_' /smartmet/editor/radar
+cleaner -maxage 24 '_radar_' /smartmet/data/radar
 find /smartmet/data/incoming/radar -type f -mmin +180 -delete
 EOF
 
@@ -58,5 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %{smartmetroot}/*
 
 %changelog
+* Thu May 3 2018 Mikko Rauhala <mikko.rauhala@fmi.fi> 18.5.3-1.el7.fmi
+- Fixed hdf5 conversion and cleaning
+
 * Fri Apr 27 2018 Mikko Rauhala <mikko.rauhala@fmi.fi> 18.4.27-1.el7.fmi
 - Initial Version

@@ -27,9 +27,10 @@ do
 	SITE=$(basename $FILE|cut -f1 -d.)
 	PROD=$(basename $FILE|cut -f3 -d.)
 	TIMESTAMP=$(basename $FILE|cut -f2 -d.)
-	OUTPUTFILE=${TIMESTAMP}_radar_${SITE,,}_${PROD,,}.sqd
-	echo $OUTPUTFILE
-	h5toqd --lowercase --prodparfix --producername "${SITE} ${PROD}" $FILE "$EDITOR/%ORIGINTIME_radar_%PLC_%PRODUCT_%QUANTITY.sqd"
+	h5toqd --lowercase --producername "${SITE} ${PROD}" $FILE "$EDITOR/%ORIGINTIME_radar_%PLC_%PRODUCT_%QUANTITY%INTERVAL.sqd"
 	rm -f $FILE
+        # copy data files to /smartmet/data/
+        mkdir -p $OUT/${SITE}/querydata/
+        rsync -av  $EDITOR/* $OUT/${SITE}/querydata/         
     fi
 done
